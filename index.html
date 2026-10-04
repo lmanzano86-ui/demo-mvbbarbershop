@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MVB Barbershop — Tampa, FL</title>
+<meta name="description" content="MVB Barbershop — Most Valuable Barbers. Cortes, barba y estilo en Tampa, FL. Reserva en línea.">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  :root { --navy:#0b1b33; --navy2:#10254a; --blue:#2e7cf6; --silver:#c0c9d6; --txt:#f2f5fa; --mut:#9aa7bd; --card:#12264a; }
+  body { font-family:'Segoe UI', system-ui, -apple-system, sans-serif; background:var(--navy); color:var(--txt); }
+  .wrap { max-width:1100px; margin:0 auto; padding:0 20px; }
+  header { position:sticky; top:0; z-index:50; background:rgba(11,27,51,.96); border-bottom:1px solid #1d3560; }
+  header .wrap { display:flex; align-items:center; justify-content:space-between; padding:12px 20px; }
+  .logo { font-weight:900; font-size:1.4rem; letter-spacing:1px; }
+  .logo .mvp { color:var(--blue); }
+  .logo small { display:block; font-size:.58rem; letter-spacing:3px; color:var(--silver); font-weight:700; }
+  .hnav { display:flex; gap:18px; align-items:center; font-size:.9rem; }
+  .hnav a { color:var(--silver); text-decoration:none; font-weight:600; }
+  .hnav a:hover { color:#fff; }
+  .lang { background:transparent; border:1.5px solid var(--blue); color:#fff; border-radius:20px; padding:6px 14px; font-weight:800; font-size:.8rem; cursor:pointer; }
+  .lang.on { background:var(--blue); }
+  .btn { display:inline-block; background:var(--blue); color:#fff; font-weight:800; text-decoration:none; border-radius:12px; padding:14px 28px; font-size:.95rem; border:none; cursor:pointer; }
+  .btn:hover { filter:brightness(1.12); }
+  .btn.ghost { background:transparent; border:2px solid var(--silver); color:#fff; }
+  .btn.green { background:#25d366; color:#062b16; }
+  @media(max-width:760px){ .hnav a.hid { display:none; } }
+  .hero { position:relative; min-height:82vh; display:flex; align-items:center; }
+  .hero .bg { position:absolute; inset:0; background:url('imgs/fachada.jpg') center/cover; }
+  .hero .shade { position:absolute; inset:0; background:linear-gradient(100deg, rgba(8,18,36,.95) 30%, rgba(8,18,36,.45) 70%, rgba(8,18,36,.25)); }
+  .hero .wrap { position:relative; width:100%; padding:80px 20px; }
+  .hero .tag { display:inline-block; background:var(--blue); color:#fff; font-size:.72rem; font-weight:900; letter-spacing:3px; border-radius:6px; padding:7px 14px; margin-bottom:14px; }
+  .hero h1 { font-size:clamp(2.4rem,6vw,4.2rem); line-height:1.02; font-weight:900; letter-spacing:-1px; }
+  .hero h1 .mvp { color:var(--blue); }
+  .hero p.lead { color:var(--silver); font-size:clamp(1rem,2.2vw,1.25rem); max-width:560px; margin:14px 0 24px; }
+  .cta-row { display:flex; gap:12px; flex-wrap:wrap; }
+  .stars { margin-top:16px; color:var(--silver); font-size:.92rem; }
+  .stars b { color:#fff; }
+  .band { background:var(--blue); color:#fff; }
+  .band .wrap { display:flex; justify-content:space-around; text-align:center; padding:20px; gap:10px; flex-wrap:wrap; }
+  .band .n { font-size:2rem; font-weight:900; }
+  .band .l { font-size:.78rem; letter-spacing:1.5px; font-weight:700; opacity:.9; }
+  section { padding:64px 0; scroll-margin-top:70px; }
+  .kick { color:var(--blue); font-weight:900; letter-spacing:3px; font-size:.75rem; margin-bottom:8px; }
+  h2.sec { font-size:clamp(1.6rem,3.6vw,2.3rem); font-weight:900; letter-spacing:-.5px; margin-bottom:8px; }
+  .sub { color:var(--mut); margin-bottom:28px; max-width:640px; }
+  .team { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:18px; }
+  .tcard { background:var(--card); border:1px solid #1d3560; border-radius:18px; padding:28px 22px; text-align:center; }
+  .tcard .av { width:84px; height:84px; border-radius:50%; margin:0 auto 14px; background:linear-gradient(135deg,var(--blue),#123a7d); display:flex; align-items:center; justify-content:center; font-size:2rem; font-weight:900; color:#fff; border:3px solid var(--blue); }
+  .tcard h3 { font-size:1.15rem; }
+  .tcard .rt { color:var(--silver); font-size:.85rem; margin:6px 0 14px; }
+  .tcard .rt b { color:#fff; }
+  .tcard a { display:inline-block; background:transparent; border:1.5px solid var(--blue); color:#fff; font-weight:800; font-size:.85rem; border-radius:24px; padding:10px 24px; text-decoration:none; }
+  .tcard a:hover { background:var(--blue); }
+  .svc-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:16px; }
+  .svc { background:var(--card); border:1px solid #1d3560; border-radius:16px; padding:22px; display:flex; flex-direction:column; }
+  .svc.hot { border-color:var(--blue); background:linear-gradient(150deg,#16294f,#12264a); }
+  .svc .badge { align-self:flex-start; background:var(--blue); color:#fff; font-size:.62rem; font-weight:900; letter-spacing:1.5px; border-radius:6px; padding:4px 10px; margin-bottom:10px; }
+  .svc h3 { font-size:1.02rem; margin-bottom:4px; }
+  .svc .du { font-size:.78rem; color:var(--mut); margin-bottom:10px; }
+  .svc .pr { font-size:1.7rem; font-weight:900; color:#fff; margin-bottom:4px; }
+  .svc .pr small { font-size:.75rem; color:var(--mut); font-weight:600; }
+  .svc a { margin-top:auto; padding-top:14px; display:inline-block; background:var(--blue); color:#fff; text-align:center; font-weight:800; font-size:.88rem; border-radius:10px; padding:12px; text-decoration:none; }
+  .gal { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+  .gal img { width:100%; height:230px; object-fit:cover; border-radius:14px; border:1px solid #1d3560; }
+  @media(max-width:760px){ .gal { grid-template-columns:1fr 1fr; } .gal img { height:170px; } }
+  .rev { background:var(--navy2); border-radius:20px; padding:36px 28px; text-align:center; border:1px solid #1d3560; }
+  .rev .big { font-size:3.2rem; font-weight:900; }
+  .rev .st { color:var(--blue); letter-spacing:5px; font-size:1.2rem; margin:8px 0; }
+  .rev p { color:var(--mut); }
+  .rev .row { display:flex; gap:12px; justify-content:center; margin-top:20px; flex-wrap:wrap; }
+  .cols2 { display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+  @media(max-width:760px){ .cols2 { grid-template-columns:1fr; } }
+  .panel { background:var(--card); border:1px solid #1d3560; border-radius:16px; padding:24px; }
+  .panel h3 { margin-bottom:12px; font-size:1.1rem; }
+  table.hours { width:100%; font-size:.92rem; border-collapse:collapse; }
+  table.hours td { padding:8px 2px; border-bottom:1px solid #1d3560; color:var(--mut); }
+  table.hours td:last-child { text-align:right; font-weight:700; color:#fff; }
+  table.hours tr.today td { color:var(--blue); font-weight:800; }
+  .qrrow { display:flex; gap:14px; margin-top:16px; }
+  .qr { background:#fff; border-radius:12px; padding:10px; text-align:center; flex:1; }
+  .qr img { width:100%; max-width:110px; height:auto; }
+  .qr p { font-size:.68rem; font-weight:800; color:#111; margin-top:4px; }
+  .tel { font-size:1.6rem; font-weight:900; color:#fff; text-decoration:none; }
+  .fab { position:fixed; bottom:18px; right:18px; width:58px; height:58px; border-radius:50%; background:#25d366; display:flex; align-items:center; justify-content:center; font-size:1.7rem; text-decoration:none; box-shadow:0 6px 18px rgba(0,0,0,.5); z-index:99; }
+  footer { background:#060f22; text-align:center; padding:30px 20px 90px; font-size:.85rem; color:var(--mut); border-top:1px solid #1d3560; }
+  footer .logo { margin-bottom:6px; }
+  .demo-tag { background:#0e1c38; color:#7d8fb0; text-align:center; font-size:.75rem; padding:8px; }
+  .note { font-size:.75rem; color:#6b7a94; font-style:italic; margin-top:14px; text-align:center; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="logo"><span class="mvp">MVB</span> BARBERSHOP<small data-es="MOST VALUABLE BARBERS" data-en="MOST VALUABLE BARBERS">MOST VALUABLE BARBERS</small></div>
+    <div class="hnav">
+      <a class="hid" href="#equipo" data-es="Equipo" data-en="Team">Equipo</a>
+      <a class="hid" href="#servicios" data-es="Servicios" data-en="Services">Servicios</a>
+      <a class="hid" href="#visitanos" data-es="Visítanos" data-en="Visit us">Visítanos</a>
+      <button class="lang on" id="btn-es" onclick="setLang('es')">ES</button>
+      <button class="lang" id="btn-en" onclick="setLang('en')">EN</button>
+      <a class="btn" style="padding:10px 22px" href="https://booksy.com/en-us/178187_mvb_barber-shop_15761_tampa" data-es="Reservar" data-en="Book now">Reservar</a>
+    </div>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="bg"></div><div class="shade"></div>
+  <div class="wrap">
+    <div class="tag" data-es="TAMPA · FLORIDA" data-en="TAMPA · FLORIDA">TAMPA · FLORIDA</div>
+    <h1><span class="mvp">MOST VALUABLE</span><br><span data-es="BARBEROS DE TAMPA" data-en="BARBERS IN TAMPA">BARBEROS DE TAMPA</span></h1>
+    <p class="lead" data-es="Tres barberos top, cientos de reseñas de 5 estrellas y el corte que buscas. Reserva en línea en segundos." data-en="Three top barbers, hundreds of 5-star reviews, and the cut you're looking for. Book online in seconds.">Tres barberos top, cientos de reseñas de 5 estrellas y el corte que buscas. Reserva en línea en segundos.</p>
+    <div class="cta-row">
+      <a class="btn" href="https://booksy.com/en-us/178187_mvb_barber-shop_15761_tampa" data-es="📅 Reservar en línea" data-en="📅 Book online">📅 Reservar en línea</a>
+      <a class="btn ghost" href="https://wa.me/18135803121?text=Hola%20MVB%20Barbershop%2C%20quiero%20reservar%20un%20corte" data-es="💬 WhatsApp" data-en="💬 WhatsApp">💬 WhatsApp</a>
+    </div>
+    <div class="stars">★ <b>5.0</b> <span data-es="en Booksy · 623 reseñas" data-en="on Booksy · 623 reviews">en Booksy · 623 reseñas</span> &nbsp;·&nbsp; ★ <b>4.4</b> <span data-es="en Google · 174 reseñas" data-en="on Google · 174 reviews">en Google · 174 reseñas</span></div>
+  </div>
+</div>
+
+<div class="band"><div class="wrap">
+  <div><div class="n">3</div><div class="l" data-es="BARBEROS TOP" data-en="TOP BARBERS">BARBEROS TOP</div></div>
+  <div><div class="n">623</div><div class="l" data-es="RESEÑAS 5 ESTRELLAS" data-en="5-STAR REVIEWS">RESEÑAS 5 ESTRELLAS</div></div>
+  <div><div class="n">7</div><div class="l" data-es="SERVICIOS" data-en="SERVICES">SERVICIOS</div></div>
+</div></div>
+
+<div class="wrap">
+<section id="equipo">
+  <div class="kick" data-es="EL EQUIPO" data-en="THE TEAM">EL EQUIPO</div>
+  <h2 class="sec" data-es="Barberos de verdad, reseñas de verdad" data-en="Real barbers, real reviews">Barberos de verdad, reseñas de verdad</h2>
+  <p class="sub" data-es="Cada uno con su perfil y sus clientes. Elige el tuyo al reservar." data-en="Each with their own profile and clientele. Pick yours when booking.">Cada uno con su perfil y sus clientes. Elige el tuyo al reservar.</p>
+  <div class="team">
+    <div class="tcard"><div class="av">O</div><h3>Omar Barber</h3><div class="rt">★ <b>5.0</b> · <span data-es="205 reseñas" data-en="205 reviews">205 reseñas</span></div><a href="https://booksy.com/en-us/178187_mvb_barber-shop_15761_tampa" data-es="Reservar con Omar" data-en="Book with Omar">Reservar con Omar</a></div>
+    <div class="tcard"><div class="av">G</div><h3>Gustathebarber</h3><div class="rt">★ <b>5.0</b> · <span data-es="243 reseñas" data-en="243 reviews">243 reseñas</span></div><a href="https://booksy.com/en-us/178187_mvb_barber-shop_15761_tampa" data-es="Reservar con Gusta" data-en="Book with Gusta">Reservar con Gusta</a></div>
+    <div class="tcard"><div class="av">K</div><h3>KANO MVB</h3><div class="rt">★ <b>5.0</b> · <span data-es="175 reseñas" data-en="175 reviews">175 reseñas</span></div><a href="https://booksy.com/en-us/178187_mvb_barber-shop_15761_tampa" data-es="Reservar con Kano" data-en="Book with Kano">Reservar con Kano</a></div>
+  </div>
+</section>
+
+<section id="servicios">
+  <div class="kick" data-es="SERVICIOS Y PRECIOS" data-en="SERVICES & PRICES">SERVICIOS Y PRECIOS</div>
+  <h2 class="sec" data-es="Precios claros, sin sorpresas" data-en="Clear prices, no surprises">Precios claros, sin sorpresas</h2>
+  <p class="sub" data-es="Toca un servicio para reservarlo en línea." data-en="Tap a service to book it online.">Toca un servicio para reservarlo en línea.</p>
+  <div class="svc-grid">
+    <div class="svc hot"><span class="badge" data-es="EL MÁS PEDIDO" data-en="MOST WANTED">EL MÁS PEDIDO</span><h3 data-es="Corte + barba + cejas" data-en="Cut + beard + eyebrows">Corte + barba + cejas</h3><div class="du">35 min</div><div class="pr"><small>desde</small> $40</div><a href="https://booksy.com/en-us/178187_mvb_barber-shop_15761_tampa" data-es="Reservar →" data-en="Book →">Reservar →</a></div>
+    <div class="svc"><h3 data-es="Corte clásico de hombre" data-en="Men's regular haircut">Corte clásico de hombre</h3><div class="du">30 min</div><div class="pr"><small>desde</small> $30</div><a href="https://booksy.com/en-us/178187_mvb_barber-shop_15761_tampa" data-es="Reservar →" data-en="Book →">Reservar →</a></div>
+    <div class="svc"><h3 data-es="Corte con peinado" data-en="Haircut with hairstyle">Corte con peinado</h3><div class="du">50 min</div><div class="pr"><small>desde</small> $50</div><a href="https://booksy.com/en-us/178187_mvb_barber-shop_15761_tampa" data-es="Reservar →" data-en="Book →">Reservar →</a></div>
+    <div class="svc"><h3 data-es="Corte con estilo + barba" data-en="Hairstyle, cut and beard">Corte con estilo + barba</h3><div class="du">1 h</div><div class="pr"><small>desde</small> $60</div><a href="https://booksy.com/en-us/178187_mvb_barber-shop_15761_tampa" data-es="Reservar →" data-en="Book →">Reservar →</a></div>
+    <div class="svc"><h3 data-es="Corte juvenil" data-en="Stylish boy cut">Corte juvenil</h3><div class="du">30 min</div><div class="pr"><small>desde</small> $30</div><a href="https://booksy.com/en-us/178187_mvb_barber-shop_15761_tampa" data-es="Reservar →" data-en="Book →">Reservar →</a></div>
+    <div class="svc"><h3 data-es="Mantenimiento de barba" data-en="Beard maintenance">Mantenimiento de barba</h3><div class="du">15 min</div><div class="pr"><small>desde</small> $20</div><a href="https://booksy.com/en-us/178187_mvb_barber-shop_15761_tampa" data-es="Reservar →" data-en="Book →">Reservar →</a></div>
+    <div class="svc"><h3 data-es="Perfilado / Line up" data-en="Edge, lineup or shape up">Perfilado / Line up</h3><div class="du">10 min</div><div class="pr"><small>desde</small> $15</div><a href="https://booksy.com/en-us/178187_mvb_barber-shop_15761_tampa" data-es="Reservar →" data-en="Book →">Reservar →</a></div>
+  </div>
+  <p class="note" data-es="Precios “desde” publicados en su Booksy." data-en="“From” prices as listed on their Booksy.">Precios “desde” publicados en su Booksy.</p>
+</section>
+
+<section>
+  <div class="kick" data-es="EL LOCAL" data-en="THE SHOP">EL LOCAL</div>
+  <h2 class="sec" data-es="Pásale y ponte cómodo" data-en="Come in and get comfortable">Pásale y ponte cómodo</h2>
+  <p class="sub" data-es="Fotos reales del local en Hillsborough Ave." data-en="Real photos of the shop on Hillsborough Ave.">Fotos reales del local en Hillsborough Ave.</p>
+  <div class="gal">
+    <img src="imgs/interior1.jpg" alt="Interior MVB Barbershop">
+    <img src="imgs/corte.jpg" alt="Corte en MVB Barbershop">
+    <img src="imgs/interior2.jpg" alt="Estaciones MVB Barbershop">
+  </div>
+</section>
+
+<section>
+  <div class="rev">
+    <div class="kick" style="text-align:center" data-es="REPUTACIÓN" data-en="REPUTATION">REPUTACIÓN</div>
+    <div class="big">5.0</div>
+    <div class="st">★★★★★</div>
+    <p data-es="623 reseñas en Booksy y 4.4 en Google. Los números hablan solos." data-en="623 reviews on Booksy and 4.4 on Google. The numbers speak for themselves.">623 reseñas en Booksy y 4.4 en Google. Los números hablan solos.</p>
+    <div class="row">
+      <a class="btn" href="https://booksy.com/en-us/178187_mvb_barber-shop_15761_tampa" data-es="Ver en Booksy" data-en="See on Booksy">Ver en Booksy</a>
+      <a class="btn ghost" href="https://www.google.com/maps/search/?api=1&query=MVB+Barbershop+10045+W+Hillsborough+Ave+Tampa+FL+33615" data-es="⭐ Déjanos tu reseña en Google" data-en="⭐ Leave us a Google review">⭐ Déjanos tu reseña en Google</a>
+    </div>
+  </div>
+</section>
+
+<section id="visitanos">
+  <div class="kick" data-es="VISÍTANOS" data-en="VISIT US">VISÍTANOS</div>
+  <h2 class="sec" data-es="Te esperamos" data-en="We'll be waiting">Te esperamos</h2>
+  <div class="cols2" style="margin-top:20px">
+    <div class="panel">
+      <h3>📍 <span data-es="Dirección" data-en="Address">Dirección</span></h3>
+      <p style="color:var(--mut)">10045 W Hillsborough Ave<br>Tampa, FL 33615</p>
+      <p style="margin-top:12px"><a class="tel" href="tel:+18135803121">(813) 580-3121</a></p>
+      <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap">
+        <a class="btn" style="padding:11px 22px;font-size:.88rem" href="https://booksy.com/en-us/178187_mvb_barber-shop_15761_tampa" data-es="Reservar en línea" data-en="Book online">Reservar en línea</a>
+        <a class="btn green" style="padding:11px 22px;font-size:.88rem" href="https://wa.me/18135803121?text=Hola%20MVB%20Barbershop%2C%20quiero%20reservar%20un%20corte" data-es="WhatsApp" data-en="WhatsApp">WhatsApp</a>
+      </div>
+      <div class="qrrow">
+        <div class="qr"><img src="qr/qr-maps.png" alt="QR mapa"><p data-es="Cómo llegar" data-en="Directions">Cómo llegar</p></div>
+        <div class="qr"><img src="qr/qr-review.png" alt="QR reseña"><p data-es="Déjanos reseña" data-en="Leave a review">Déjanos reseña</p></div>
+        <div class="qr"><img src="qr/qr-web.png" alt="QR página"><p data-es="Guarda la página" data-en="Save this page">Guarda la página</p></div>
+      </div>
+    </div>
+    <div class="panel">
+      <h3>🕐 <span data-es="Horario" data-en="Hours">Horario</span></h3>
+      <table class="hours" id="hours-table">
+        <tr><td data-es="Lunes" data-en="Monday">Lunes</td><td>10:00 AM – 5:00 PM</td></tr>
+        <tr><td data-es="Martes" data-en="Tuesday">Martes</td><td>9:30 AM – 7:00 PM</td></tr>
+        <tr><td data-es="Miércoles" data-en="Wednesday">Miércoles</td><td>9:30 AM – 7:00 PM</td></tr>
+        <tr><td data-es="Jueves" data-en="Thursday">Jueves</td><td>9:30 AM – 7:00 PM</td></tr>
+        <tr><td data-es="Viernes" data-en="Friday">Viernes</td><td>9:00 AM – 8:00 PM</td></tr>
+        <tr><td data-es="Sábado" data-en="Saturday">Sábado</td><td>9:00 AM – 7:00 PM</td></tr>
+        <tr><td data-es="Domingo" data-en="Sunday">Domingo</td><td data-es="Cerrado" data-en="Closed">Cerrado</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+</div>
+
+<a class="fab" href="https://wa.me/18135803121?text=Hola%20MVB%20Barbershop%2C%20quiero%20reservar%20un%20corte">💬</a>
+
+<footer>
+  <div class="logo"><span class="mvp">MVB</span> BARBERSHOP</div>
+  <p style="margin-top:6px;">10045 W Hillsborough Ave, Tampa, FL 33615 · (813) 580-3121</p>
+</footer>
+<div class="demo-tag" data-es="Página de demostración creada por Lester Manzano" data-en="Demo page by Lester Manzano">Página de demostración creada por Lester Manzano</div>
+
+<script>
+function setLang(l){
+  document.querySelectorAll('[data-es]').forEach(function(el){
+    el.innerHTML = (l==='es') ? el.getAttribute('data-es') : el.getAttribute('data-en');
+  });
+  document.getElementById('btn-es').className = 'lang' + (l==='es'?' on':'');
+  document.getElementById('btn-en').className = 'lang' + (l==='en'?' on':'');
+  document.documentElement.lang = l;
+  try{ localStorage.setItem('mvb_lang', l); }catch(e){}
+}
+(function(){
+  try{ var s = localStorage.getItem('mvb_lang'); if(s==='en') setLang('en'); }catch(e){}
+  var d = new Date().getDay();
+  var idx = (d+6)%7;
+  var rows = document.getElementById('hours-table').rows;
+  if(rows[idx]) rows[idx].className = 'today';
+})();
+</script>
+</body>
+</html>
